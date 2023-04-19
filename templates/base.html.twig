@@ -15,15 +15,15 @@
         ></script>
     </head>
     <body class="d-flex flex-column">
-        <header>HEADER</header>
+        {{ include("partials/_header.html.twig") }}
         <div class="flex-fill d-flex flex-row-nowrap justify-content-center">
             <div class="content flex-fill d-flex flex-row-nowrap">
-                <div class="sidebar">SIDEBAR</div>
+                {{ include("partials/_sidebar.html.twig") }}
                 <div class="app-content flex-fill">
                     {% block body %}{% endblock %}
                 </div>
             </div>
         </div>
-        <footer>FOOTER</footer>
+        {{ include("partials/_footer.html.twig") }}
     </body>
 </html>
