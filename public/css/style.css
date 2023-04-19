@@ -16,6 +16,7 @@
     --gray: #636466;
     --gray-dark: #444;
     --gray-light: #ddd;
+    --footer-bg: #111831;
 }
 
 /* reset */
@@ -91,6 +92,10 @@ h5 {
 
 .m-20 {
     margin: 20px;
+}
+
+.mr-5 {
+    margin-right: 5px;
 }
 
 /* Paddings */
@@ -169,6 +174,13 @@ header {
     border: none;
     outline: none;
     background-color: var(--gray-light);
+}
+
+/* FOOTER */
+
+footer {
+    background-color: var(--footer-bg);
+    color: white;
 }
 
 /* SIDEBAR */
