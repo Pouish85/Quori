@@ -26,11 +26,11 @@
 
 <!-- Status -->
 
-<!-- <h4 align="center">
+<h4 align="center">
 	🚧  Quori 🚀 Under construction...  🚧
 </h4>
 
-<hr> -->
+<hr>
 
 <p align="center">
   <a href="#dart-about">About</a> &#xa0; | &#xa0; 
@@ -64,11 +64,11 @@ Clone du site officiel Quora
 
 The following tools were used in this project:
 
--   [symfony](https://symfony.com)
+-   [Symfony](https://symfony.com)
 -   [JavaScript](https://developer.mozilla.org/fr/docs/Web/JavaScript)
 -   [MySQL](https://www.mysql.com/)
-    <!-- -   [React](https://pt-br.reactjs.org/) -->
-    <!-- -   [React Native](https://reactnative.dev/) -->
+-   [Sass](https://sass-lang.com)
+-   [Webpack Encore](https://www.npmjs.com/package/@symfony/webpack-encore)
 
 <!-- ## :white_check_mark: Requirements
 
