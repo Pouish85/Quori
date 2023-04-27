@@ -8,6 +8,10 @@
     --success: #009432;
     --font-family: "Open Sans", sans-serif;
     --font-size-small: 15px;
+    --font-size-regular: 16px;
+    --font-weight-regular: 400;
+    --font-weight-semi-bold: 600;
+    --font-weight-bold: 700;
     --box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
         0 1px 3px 1px rgb(60 64 67 / 15%);
     --border-radius: 3px;
@@ -111,6 +115,10 @@ a {
     margin-right: 50px;
 }
 
+.mb-20 {
+    margin-bottom: 20px;
+}
+
 /* Paddings */
 .p-5 {
     padding: 5px;
@@ -166,9 +174,54 @@ ul {
     background-color: white;
 }
 
+.block {
+    padding: 25px;
+    border-radius: var(--border-radius);
+    background-color: white;
+    box-shadow: var(--box-shadow);
+}
+
 /* GENERAL */
 .content {
     max-width: 1200px;
+}
+
+.app-content {
+    background-color: var(--gray-light);
+}
+
+/* FORMULAIRE */
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.form-row label {
+    margin-bottom: 5px;
+    font-weight: var(--font-weight-semi-bold);
+    color: var(--color-dark);
+}
+
+.form-row input,
+.form-row textarea {
+    font-family: var(--font-family);
+    font-size: var(--font-size-regular);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 10px 15px;
+    background-color: var(--gray-light);
+}
+
+.form-row textarea {
+    min-height: 150px;
+}
+
+.form-errors {
+    color: var(--warning);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-semi-bold);
 }
 
 /* HEADER */
@@ -183,6 +236,7 @@ header {
 
 .header-logo img {
     max-width: 150px;
+    border-radius: 8px;
 }
 
 .header-search {
