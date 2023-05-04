@@ -16,6 +16,11 @@
     </head>
     <body class="d-flex flex-column">
         {{ include("partials/_header.html.twig") }}
+        {% for cat, list in app.flashes %} {% for msg in list %}
+        <div class="flash flash-{{ cat }}">
+            {{ msg }}
+        </div>
+        {% endfor %} {% endfor %}
         <div
             class="app-content flex-fill d-flex flex-row-nowrap justify-content-center"
         >
