@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\QuestionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use symfony\Component\Validator\Constraints as Assert;
@@ -17,12 +19,12 @@ class Question
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Veuillez définir un titre")]
-    #[Assert\Length(min: 20, minMessage: "Veuillez détailler cotre titre", max: 255, maxMessage: "Le titre est trop long")]
+    #[Assert\Length(min: 20, minMessage: "Veuillez détailler votre titre", max: 255, maxMessage: "Le titre est trop long")]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: "Veuillez définir un titre")]
-    #[Assert\Length(min: 20, minMessage: "Veuillez détailler cotre question")]
+    #[Assert\Length(min: 20, minMessage: "Veuillez détailler votre question")]
     private ?string $content = null;
 
     #[ORM\Column]
@@ -33,6 +35,14 @@ class Question
 
     #[ORM\Column]
     private ?int $nbResponse = null;
+
+    #[ORM\OneToMany(mappedBy: 'question', targetEntity: Comment::class)]
+    private Collection $comments;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -95,6 +105,36 @@ class Question
     public function setNbResponse(int $nbResponse): self
     {
         $this->nbResponse = $nbResponse;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getQuestion() === $this) {
+                $comment->setQuestion(null);
+            }
+        }
 
         return $this;
     }
