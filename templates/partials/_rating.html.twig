@@ -1,0 +1,15 @@
+<div
+    class="d-flex flex-column mr-20 align-items-center justify-content-center mr-20"
+>
+    <a href="{{ path(from ~ '_rating', {id: id, score: 1}) }}">
+        <i class="fa-solid fa-plus {{ rating > 0 ? 'rating-up' : '' }}"></i>
+    </a>
+
+    <p {% if rating>
+        0 %} class="rating-up" {% elseif rating < 0 %} class="rating-down" {%
+        endif %}>{{ rating }}
+    </p>
+    <a href="{{ path(from ~ '_rating', {id: id, score: -1}) }}">
+        <i class="fa-solid fa-minus {{ rating < 0 ? 'rating-down' : '' }}"></i>
+    </a>
+</div>
