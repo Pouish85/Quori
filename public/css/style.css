@@ -169,6 +169,12 @@ small {
     padding: 50px 0;
 }
 
+/* WIDTH */
+
+.w-full {
+    width: 100%;
+}
+
 /* BTNs */
 .btn {
     border-radius: var(--border-radius);
