@@ -39,21 +39,21 @@ class UserController extends AbstractController
             $this->addFlash('success', 'Modification des informations sauvegardées !');
         }
 
-        return $this->render('user/show.html.twig', [
+        return $this->render('user/profile.html.twig', [
             'form' => $profileForm->createView()
         ]);
     }
 
-    #[Route('/user/questions', name: 'show_questions')]    
+    #[Route('/user/questions', name: 'show_questions')]
     #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
-    public function showQuestions() 
+    public function showQuestions()
     {
         return $this->render('user/show_questions.html.twig');
     }
 
     #[Route('/user/comments', name: 'show_comments')]
     #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
-    public function showComments() 
+    public function showComments()
     {
         return $this->render('user/show_comments.html.twig');
     }
@@ -66,6 +66,6 @@ class UserController extends AbstractController
         if ($currentUser === $user) {
             return $this->redirectToRoute('current_user_profile');
         }
-        return $this->render('user/show.html.twig');
+        return $this->render('user/show.html.twig', ['user' => $user]);
     }
 }
