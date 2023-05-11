@@ -132,6 +132,10 @@ small {
     margin-bottom: 20px;
 }
 
+.mb-50 {
+    margin-bottom: 50px;
+}
+
 .ml-10 {
     margin-left: 10px;
 }
@@ -142,6 +146,10 @@ small {
 
 .mt-10 {
     margin-top: 10px;
+}
+
+.mt-20 {
+    margin-top: 20px;
 }
 
 /* Paddings */
