@@ -136,6 +136,10 @@ small {
     margin-left: auto;
 }
 
+.mt-10 {
+    margin-top: 10px;
+}
+
 /* Paddings */
 .p-5 {
     padding: 5px;
