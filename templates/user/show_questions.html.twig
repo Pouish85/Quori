@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Mes questions
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{asset('css/show_questions_replies.css')}}">
+{% endblock %}
+
+{% block body %}
+    <div class="block mb-20">
+        <h3 class="pb-30">Mes questions:</h3>
+        <ul>
+            {% for question in app.user.questions %}
+                <a href="{{ path('show_question', {id: question.id}) }}" class="d-flex flex-row pb-20 justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <h4 class="tagQ">Q</h4>
+                        <li class="question-title">{{ question.title }}</li>
+                    </div>
+                    <div>
+                        <p class="fa-solid fa-chart-line mr-10"><span class="ml-10 {% if question.rating > 0 %} rating-up {% elseif question.rating < 0 %} rating-down {% endif %}" >{{question.rating }}</span></p>
+                        <p class="fa-solid fa-comment mr-10"><span class="ml-10">{{ question.nbResponse }}</span></p>
+                    </div>
+                </a>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

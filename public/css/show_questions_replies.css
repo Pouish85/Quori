@@ -1,0 +1,30 @@
+.question-title {
+    color: var(--primary);
+    font-weight: var(--font-weight-bold);
+}
+
+.tagQ {
+    background-color: var(--primary);
+    color: white;
+    height: 25px;
+    width: 25px;
+    font-weight: var(--font-weight-semi-bold);
+    text-align: center;
+    margin-left: 10px;
+    border-radius: 50%;
+    padding-top: 3px;
+    margin-right: 5px;
+}
+
+.tagR {
+    background-color: var(--color);
+    color: white;
+    height: 25px;
+    width: 25px;
+    font-weight: var(--font-weight-semi-bold);
+    text-align: center;
+    margin-left: 10px;
+    border-radius: 50%;
+    padding-top: 3px;
+    margin-right: 5px;
+}
