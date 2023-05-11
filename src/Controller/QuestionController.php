@@ -16,8 +16,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuestionController extends AbstractController
 {
     #[Route('/question/ask', name: 'ask_question')]
+    #[isGranted('IS_AUTENTICATED_REMEMBERED')]
     public function ask(Request $request, entityManagerInterface $em): Response
     {
+        $user = $this->getUser();
         $question = new Question();
         $formQuestion = $this->createForm(QuestionType::class, $question);
         $formQuestion->handleRequest($request);
@@ -25,8 +27,8 @@ class QuestionController extends AbstractController
         if ($formQuestion->isSubmitted() && $formQuestion->isValid()) {
             $question->setNbResponse(0);
             $question->setRating(0);
+            $question->setAuthor($user);
             $question->setCreatedAt(new \DateTimeImmutable(timezone: new DateTimeZone("Europe/Paris")));
-
 
             $em->persist($question);
             $em->flush();
@@ -42,31 +44,40 @@ class QuestionController extends AbstractController
     #[Route('/question/{id}', name: 'show_question')]
     public function show(Request $request, EntityManagerInterface $em, Question $question)
     {
+        $user = $this->getUser();
 
-        $comment = new Comment();
-        $commentForm = $this->createForm(CommentType::class, $comment);
-        $commentForm->handleRequest($request);
+        $options = [
+            'question' => $question
+        ];
 
-        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
-            $comment->setCreatedAt(new \DateTimeImmutable(timezone: new DateTimeZone("Europe/Paris")));
-            $comment->setRating(0);
-            $comment->setQuestion($question);
+        if ($user) {
+            $comment = new Comment();
+            $commentForm = $this->createForm(CommentType::class, $comment);
+            $commentForm->handleRequest($request);
 
-            $question->setNbResponse($question->getNbResponse() + 1);
+            if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+                $comment->setCreatedAt(new \DateTimeImmutable(timezone: new DateTimeZone("Europe/Paris")));
+                $comment->setRating(0);
+                $comment->setQuestion($question);
+                $comment->setAuthor($user);
 
-            $em->persist($comment);
-            $em->flush();
+                $question->setNbResponse($question->getNbResponse() + 1);
 
-            $this->addFlash('success', "votre réponse à bien été publiée");
+                $em->persist($comment);
+                $em->flush();
 
-            return $this->redirect($request->getUri());
+                $this->addFlash('success', "votre réponse à bien été publiée");
+
+                return $this->redirect($request->getUri());
+            }
+            $options['form'] = $commentForm->createView();
         }
 
-
-        return $this->render('question/show.html.twig', ['question' => $question, 'form' => $commentForm->createView()]);
+        return $this->render('question/show.html.twig', $options);
     }
 
     #[Route('/question/rating/{id}/{score}', name: 'question_rating')]
+    #[isGranted('IS_AUTENTICATED_REMEMBERED')]
     public function rate(Request $request, Question $question, int $score, EntityManagerInterface $em)
     {
         $question->setRating($question->getRating() + $score);

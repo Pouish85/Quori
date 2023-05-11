@@ -14,8 +14,8 @@
                     </div>
                     <div class="d-flex flex-row justify-content-between">
                         <div class="d-flex flex-row align-items-center">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0W14ir2AkRjKVT39ZGYjlwdYCdZmQqtS5bI3Z62LoU0q_CnluvLR5P3XyWJPalmN7r1g&usqp=CAU" alt="" class="avatar-small mr-20">
-                            <small>Demandé par <span class="clickable">Marcel Patulacci</span> le <span>{{ question.createdAt | format_datetime('short', locale= 'fr') }}</span></small>
+                            <img src="{{question.author.image}}" alt="" class="avatar-small mr-20">
+                            <small>Demandé par <span class="clickable">{{ question.author.fullname }}</span> le <span>{{ question.createdAt | format_datetime('short', locale= 'fr') }}</span></small>
                         </div>    
                         <div class="d-flex flex-row align-items-center">
                             <i class="fa-solid fa-comment mr-20"></i>

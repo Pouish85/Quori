@@ -52,10 +52,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Comment::class)]
     private Collection $comments;
 
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Question::class)]
+    private Collection $author;
+
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Comment::class)]
+    private Collection $comments2;
+
     public function __construct()
     {
         $this->questions = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->author = new ArrayCollection();
+        $this->comments2 = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -218,6 +226,71 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($comment->getAuthor() === $this) {
                 $comment->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getFullname(): string
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
+
+    /**
+     * @return Collection<int, Question>
+     */
+    public function getAuthor(): Collection
+    {
+        return $this->author;
+    }
+
+    public function addAuthor(Question $author): self
+    {
+        if (!$this->author->contains($author)) {
+            $this->author->add($author);
+            $author->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAuthor(Question $author): self
+    {
+        if ($this->author->removeElement($author)) {
+            // set the owning side to null (unless already changed)
+            if ($author->getAuthor() === $this) {
+                $author->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments2(): Collection
+    {
+        return $this->comments2;
+    }
+
+    public function addComments2(Comment $comments2): self
+    {
+        if (!$this->comments2->contains($comments2)) {
+            $this->comments2->add($comments2);
+            $comments2->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComments2(Comment $comments2): self
+    {
+        if ($this->comments2->removeElement($comments2)) {
+            // set the owning side to null (unless already changed)
+            if ($comments2->getAuthor() === $this) {
+                $comments2->setAuthor(null);
             }
         }
 
