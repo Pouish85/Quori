@@ -15,8 +15,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class UserController extends AbstractController
 {
-    #[Route('/user', name: 'current_user_profile')]
-    #[IsGranted("IS_AUTHENTICATED_REMEMBERED")]
+    #[Route('/user', name: 'current_user_profile_settings')]
+    #[IsGranted("IS_AUTHENTICATED_FULLY")]
     public function currentUserProfile(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $em): Response
     {
         /**
@@ -39,9 +39,16 @@ class UserController extends AbstractController
             $this->addFlash('success', 'Modification des informations sauvegardées !');
         }
 
-        return $this->render('user/profile.html.twig', [
+        return $this->render('user/profile_settings.html.twig', [
             'form' => $profileForm->createView()
         ]);
+    }
+
+    #[Route('/user/profile', name: 'current_user_profile')]
+    #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
+    public function showProfile()
+    {
+        return $this->render('user/profile.html.twig');
     }
 
     #[Route('/user/questions', name: 'show_questions')]

@@ -69,6 +69,68 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->comments2 = new ArrayCollection();
     }
 
+    public function getTotalQuestionsRating(): int
+    {
+        $totalRating = 0;
+
+        foreach ($this->questions as $question) {
+            $totalRating += $question->getRating();
+        }
+
+        return $totalRating;
+    }
+
+    public function getTotalCommentsRating(): int
+    {
+        $totalRating = 0;
+
+        foreach ($this->comments as $comment) {
+            $totalRating += $comment->getRating();
+        }
+
+        return $totalRating;
+    }
+
+    // public function getQuestionWithHighestRating(): ?Question
+    // {
+    //     $highestRating = 0;
+    //     $questionWithHighestRating = null;
+
+    //     foreach ($this->questions as $question) {
+    //         if ($question->getRating() > $highestRating) {
+    //             $highestRating = $question->getRating();
+    //             $questionWithHighestRating = $question;
+    //         }
+    //     }
+
+    //     return $questionWithHighestRating;
+    // }
+
+    // public function getCommentWithHighestRating(): ?Comment
+    // {
+    //     $highestRating = 0;
+    //     $commentWithHighestRating = null;
+
+    //     foreach ($this->comments as $comment) {
+    //         if ($comment->getRating() > $highestRating) {
+    //             $highestRating = $comment->getRating();
+    //             $commentWithHighestRating = $comment;
+    //         }
+    //     }
+
+    //     return $commentWithHighestRating;
+    // }
+
+    public function getTotalQuestions(): int
+    {
+        return $this->questions->count();
+    }
+
+    public function getTotalComments(): int
+    {
+        return $this->comments->count();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

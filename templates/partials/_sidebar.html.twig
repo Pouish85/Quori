@@ -11,6 +11,10 @@
             Liste des questions
         </a>
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <a href="{{ path('current_user_profile') }}" class="{{ app.request.pathinfo == path('current_user_profile') ? 'active' : "" }}">
+                <i class="fa-solid fa-user mr-5"></i>
+                Mon profil
+            </a>
             <a href="{{ path('show_questions') }}" class="{{ app.request.pathinfo == path('show_questions') ? 'active' : "" }}">
                 <i class="fa-solid fa-pen mr-5"></i>
                 Mes questions
