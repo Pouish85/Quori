@@ -2,6 +2,11 @@
 
 {% block title %}User Profile{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{asset('css/show_questions_replies.css')}}">
+{% endblock %}
+
 {% block body %}
     <div class="block">
         <h2 class="pb-30">Page de profil</h2>
@@ -19,9 +24,14 @@
             <div class="d-flex flex-row-nowrap justify-content-between mt-10">
                 <h4>Moyenne des votes:</h4>
                 <p>{{ app.user.totalQuestionsRating / app.user.totalQuestions }}</p>
+                <p>{{ app.user.averageQuestionsRating }}</p>
             </div>
-            <div class="d-flex flex-row-nowrap justify-content-between mt-10">
-                <h4>Question la plus populaire:</h4>
+            <div class="d-flex flex-column mt-10">
+                <h4  class="mb-10" >Question la plus populaire:</h4>
+                <div class="d-flex flex-row-nowrap align-items-center">
+                    <h4 class="tagQ">Q</h4>
+                    <p class="question-title">La question la plus populaire</p>
+                </div>
             </div>
                 {# <p>{{ app.user.getQuestions() | sort() }}</p> #}
             {# {% if app.user.getQuestionWithHighestRating() is not null %}
@@ -37,6 +47,13 @@
             <div class="d-flex flex-row-nowrap justify-content-between mt-10">
                 <h4>Moyenne des votes:</h4>
                 <p>{{ app.user.totalCommentsRating / app.user.totalComments }}</p>
+            </div>
+            <div class="d-flex flex-column mt-10">
+                <h4 class="mb-10">Réponse la plus populaire:</h4>
+                <div class="d-flex flex-row-nowrap align-items-center">
+                    <h4 class="tagQ">Q</h4>
+                    <p class="question-title">La question la plus populaire <span><p class="tagR">R</p><p>la réponse la plus poulaire</p></span></p>
+                </div>
             </div>
         </a>
     </div>
