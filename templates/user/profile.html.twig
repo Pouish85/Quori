@@ -15,47 +15,52 @@
         <h2>Vos statistiques</h2>
     </div>
     <div class="d-flex flex-row-nowrap mt-20">
-        <a href="{{path('show_questions')}}" class="block flex-fill mr-10" title="Vos questions">
-            <h3>Questions:</h3>
+        <div class="block flex-fill mr-10" title="Vos questions">
+            <a href="{{path('show_questions')}}" class="sectionTitle">Questions:</a>
             <div class="d-flex flex-row-nowrap justify-content-between mt-10">
                 <h4>Nombre de questions:</h4>
                 <p>{{app.user.getQuestions() | length()}}</p>
             </div>
             <div class="d-flex flex-row-nowrap justify-content-between mt-10">
                 <h4>Moyenne des votes:</h4>
-                <p>{{ app.user.totalQuestionsRating / app.user.totalQuestions }}</p>
                 <p>{{ app.user.averageQuestionsRating }}</p>
             </div>
             <div class="d-flex flex-column mt-10">
-                <h4  class="mb-10" >Question la plus populaire:</h4>
-                <div class="d-flex flex-row-nowrap align-items-center">
-                    <h4 class="tagQ">Q</h4>
-                    <p class="question-title">La question la plus populaire</p>
-                </div>
+                <h4  class="mb-10" >Question la mieux notée:</h4>
+                {% if app.user.getQuestionWithHighestRating() is not null %}
+                <a href="{{path('show_question', {id: app.user.getQuestionWithHighestRating().id})}}" class="d-flex flex-row-nowrap align-items-center">
+                    {# <h4 class="tagQ">Q</h4> #}
+                    {# <p class="question-title">La question la plus populaire</p> #}
+                        <h4 class="tagQ">Q</h4>
+                        <p class="question-title">{{ app.user.getQuestionWithHighestRating().title | slice(0,20) }}  {% if app.user.getQuestionWithHighestRating().title | length >= 21 %} 
+                            <span title="Voir la suite">...</span> 
+                            {% endif %}</p>
+                </a>
+                {% endif %}
             </div>
-                {# <p>{{ app.user.getQuestions() | sort() }}</p> #}
-            {# {% if app.user.getQuestionWithHighestRating() is not null %}
-                    <p>{{ app.user.getQuestionWithHighestRating().content }}</p>
-            {% endif %} #}
-        </a>
-        <a href="{{path('show_comments')}}" class="block flex-fill ml-10" title="Vos reponses">
-            <h3>Réponses:</h3>
+        </div>
+        <div class="block flex-fill ml-10" title="Vos reponses">
+            <a href="{{path('show_comments')}}" class="sectionTitle">Réponses:</a>
             <div class="d-flex flex-row-nowrap justify-content-between mt-10">
                 <h4>Nombre de réponses:</h4>
                 <p>{{app.user.getComments() | length()}}</p>
             </div>
             <div class="d-flex flex-row-nowrap justify-content-between mt-10">
                 <h4>Moyenne des votes:</h4>
-                <p>{{ app.user.totalCommentsRating / app.user.totalComments }}</p>
+                <p>{{ app.user.averageCommentsRating }}</p>
             </div>
             <div class="d-flex flex-column mt-10">
-                <h4 class="mb-10">Réponse la plus populaire:</h4>
-                <div class="d-flex flex-row-nowrap align-items-center">
-                    <h4 class="tagQ">Q</h4>
-                    <p class="question-title">La question la plus populaire <span><p class="tagR">R</p><p>la réponse la plus poulaire</p></span></p>
-                </div>
+                <h4 class="mb-10">Réponse le mieux noté:</h4>
+                {% if app.user.getCommentWithHighestRating() is not null %}
+                <a href="{{path('show_question', {id: app.user.getCommentWithHighestRating().question.id})}}" class="d-flex flex-row-nowrap align-items-center">
+                        <h4 class="tagQ">Q</h4>
+                        <p class="question-title">{{ app.user.getCommentWithHighestRating().question.title | slice(0,20) }} {% if app.user.getCommentWithHighestRating().question.title | length >=21 %} <span title="Voir la suite">...</span>{% endif %}
+                        <span><p class="tagR">R</p><p>{{ app.user.getCommentWithHighestRating().content | slice(0,20) }} {% if app.user.getCommentWithHighestRating().content | length >= 21 %} <span title="Voir la suite">...</span> {% endif %}
+                        </p></span></p>
+                </a>
+                {% endif %}
             </div>
-        </a>
+        </div>
     </div>
     <div class="block mt-20">
         <a href="{{ path('current_user_profile_settings') }}"><i class="fa-solid fa-gear mr-10"></i>Paramètres du compte</a>

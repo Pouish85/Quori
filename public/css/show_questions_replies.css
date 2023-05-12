@@ -28,3 +28,10 @@
     padding-top: 3px;
     margin-right: 5px;
 }
+
+.sectionTitle {
+    color: var(--primary-light);
+    font-size: var(--font-size-large);
+    font-weight: var(--font-weight-bold);
+    text-decoration: underline;
+}

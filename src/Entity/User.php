@@ -6,10 +6,10 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: "email", message: "Cet email est déjà enregistré.")]
@@ -22,7 +22,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\Email(message: "Veuillez renseigner un email valide")]
-    #[Assert\NotBlank(message: "Ce champ ne peut etre vide")]
+    #[Assert\NotBlank(message: 'Ce champ ne peut être vide')]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -32,16 +32,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\Length(min: 6, minMessage: "Le mot de passe doit faire au minimum 6 caractères")]
-    #[Assert\NotBlank(message: "Ce champ ne peut etre vide")]
+    #[Assert\Length(min: 6, minMessage: "Le mot de passe doit faire au minimum 6 caracteres")]
+    #[Assert\NotBlank(message: 'Ce champ ne peut être vide')]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Ce champ ne peut etre vide")]
+    #[Assert\NotBlank(message: 'Ce champ ne peut être vide')]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Ce champ ne peut etre vide")]
+    #[Assert\NotBlank(message: 'Ce champ ne peut être vide')]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -53,13 +53,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Comment::class)]
     private Collection $comments;
 
-    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Question::class)]
-    private Collection $author;
-
-    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Comment::class)]
-    private Collection $comments2;
-
-    #[Assert\Length(min: 6, minMessage: "Le mot de passe doit faire au minimum 6 caractères")]
+    #[Assert\Length(min: 6, minMessage: "Le mot de passe doit faire au minimum 6 caracteres")]
     private ?string $newPassword = null;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Vote::class)]
@@ -69,8 +63,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->questions = new ArrayCollection();
         $this->comments = new ArrayCollection();
-        $this->author = new ArrayCollection();
-        $this->comments2 = new ArrayCollection();
         $this->votes = new ArrayCollection();
     }
 
@@ -97,47 +89,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $totalRating;
     }
 
-    public function getAverageQuestionsRating(): int
-    {
-        $averageQuestionsRating = 0;
-        $totalQuestionRating = $this->getTotalQuestionsRating();
-        $totalQuestions = $this->getTotalQuestions();
-
-        $averageQuestionsRating = $totalQuestionRating / $totalQuestions;
-
-        return $averageQuestionsRating;
-    }
-
-    // public function getQuestionWithHighestRating(): ?Question
-    // {
-    //     $highestRating = 0;
-    //     $questionWithHighestRating = null;
-
-    //     foreach ($this->questions as $question) {
-    //         if ($question->getRating() > $highestRating) {
-    //             $highestRating = $question->getRating();
-    //             $questionWithHighestRating = $question;
-    //         }
-    //     }
-
-    //     return $questionWithHighestRating;
-    // }
-
-    // public function getCommentWithHighestRating(): ?Comment
-    // {
-    //     $highestRating = 0;
-    //     $commentWithHighestRating = null;
-
-    //     foreach ($this->comments as $comment) {
-    //         if ($comment->getRating() > $highestRating) {
-    //             $highestRating = $comment->getRating();
-    //             $commentWithHighestRating = $comment;
-    //         }
-    //     }
-
-    //     return $commentWithHighestRating;
-    // }
-
     public function getTotalQuestions(): int
     {
         return $this->questions->count();
@@ -146,6 +97,70 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getTotalComments(): int
     {
         return $this->comments->count();
+    }
+
+    public function getAverageQuestionsRating(): int
+    {
+        $averageQuestionsRating = 0;
+        $totalQuestionRating = $this->getTotalQuestionsRating();
+        $totalQuestions = $this->getTotalQuestions();
+
+        if ($totalQuestions === 0) {
+
+            $averageQuestionsRating = 0;
+        } else {
+
+            $averageQuestionsRating = $totalQuestionRating / $totalQuestions;
+        }
+
+        return $averageQuestionsRating;
+    }
+
+    public function getAverageCommentsRating(): int
+    {
+        $averageCommentsRating = 0;
+        $totalCommentRating = $this->getTotalCommentsRating();
+        $totalComments = $this->getTotalComments();
+
+        if ($totalComments === 0) {
+
+            $averageCommentsRating = 0;
+        } else {
+
+            $averageCommentsRating = $totalCommentRating / $totalComments;
+        }
+
+        return $averageCommentsRating;
+    }
+
+    public function getQuestionWithHighestRating(): ?Question
+    {
+        $highestRating = 0;
+        $questionWithHighestRating = null;
+
+        foreach ($this->questions as $question) {
+            if ($question->getRating() > $highestRating) {
+                $highestRating = $question->getRating();
+                $questionWithHighestRating = $question;
+            }
+        }
+
+        return $questionWithHighestRating;
+    }
+
+    public function getCommentWithHighestRating(): ?Comment
+    {
+        $highestRating = 0;
+        $commentWithHighestRating = null;
+
+        foreach ($this->comments as $comment) {
+            if ($comment->getRating() > $highestRating) {
+                $highestRating = $comment->getRating();
+                $commentWithHighestRating = $comment;
+            }
+        }
+
+        return $commentWithHighestRating;
     }
 
     public function getId(): ?int
@@ -223,7 +238,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
 
     /**
      * @see UserInterface
@@ -333,66 +347,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getFullname(): string
     {
         return $this->firstname . ' ' . $this->lastname;
-    }
-
-    /**
-     * @return Collection<int, Question>
-     */
-    public function getAuthor(): Collection
-    {
-        return $this->author;
-    }
-
-    public function addAuthor(Question $author): self
-    {
-        if (!$this->author->contains($author)) {
-            $this->author->add($author);
-            $author->setAuthor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAuthor(Question $author): self
-    {
-        if ($this->author->removeElement($author)) {
-            // set the owning side to null (unless already changed)
-            if ($author->getAuthor() === $this) {
-                $author->setAuthor(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Comment>
-     */
-    public function getComments2(): Collection
-    {
-        return $this->comments2;
-    }
-
-    public function addComments2(Comment $comments2): self
-    {
-        if (!$this->comments2->contains($comments2)) {
-            $this->comments2->add($comments2);
-            $comments2->setAuthor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComments2(Comment $comments2): self
-    {
-        if ($this->comments2->removeElement($comments2)) {
-            // set the owning side to null (unless already changed)
-            if ($comments2->getAuthor() === $this) {
-                $comments2->setAuthor(null);
-            }
-        }
-
-        return $this;
     }
 
     /**

@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: QuestionRepository::class)]
 class Question
@@ -19,12 +19,12 @@ class Question
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Veuillez définir un titre")]
-    #[Assert\Length(min: 20, minMessage: "Veuillez détailler votre titre", max: 255, maxMessage: "Le titre est trop long")]
+    #[Assert\Length(min: 20, minMessage: "Veuiilez détailler votre titre", max: 255, maxMessage: "Le titre est trop long")]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: "Veuillez définir un titre")]
-    #[Assert\Length(min: 20, minMessage: "Veuillez détailler votre question")]
+    #[Assert\Length(min: 20, minMessage: "Veuiilez détailler votre question")]
     private ?string $content = null;
 
     #[ORM\Column]
@@ -39,7 +39,7 @@ class Question
     #[ORM\OneToMany(mappedBy: 'question', targetEntity: Comment::class)]
     private Collection $comments;
 
-    #[ORM\ManyToOne(inversedBy: 'author')]
+    #[ORM\ManyToOne(inversedBy: 'questions')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $author = null;
 
