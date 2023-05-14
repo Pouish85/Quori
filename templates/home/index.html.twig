@@ -15,7 +15,7 @@
                     <div class="d-flex flex-row justify-content-between">
                         <a href="{{ path('user_profile', {id: question.author.id}) }}" class="d-flex flex-row align-items-center">
                             <img src="{{question.author.image}}" alt="" class="avatar-small mr-20">
-                            <small>Demandé par <span class="clickable">{{ question.author.fullname }}</span> le <span>{{ question.createdAt | format_datetime('short', locale= 'fr') }}</span></small>
+                            <small>Demandé par <span class="clickable">{{ question.author.username }}</span> le <span>{{ question.createdAt | format_datetime('short', locale= 'fr') }}</span></small>
                         </a>    
                         <div class="d-flex flex-row align-items-center">
                             <i class="fa-solid fa-comment mr-20"></i>

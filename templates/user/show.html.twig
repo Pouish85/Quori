@@ -9,12 +9,12 @@
 
 {% block body %}
     <div class="block mb-20">
-        <h2 class="pb-30">Profil de {{ user.fullname }}</h2>
+        <h2 class="pb-30">Profil de {{ user.username }}</h2>
         <div class="d-flex flex-row-nowrap align-items-center">
             <img src="{{user.image}}" alt="User Avatar" class="mr-10 avatar-small">
             <ul>
-                <li class="mb-10">
-                    <strong class="mr-10">{{user.email}}</strong>
+                <li class="mb-10 align-items-center">
+                    <p class="">membre depuis {{ user.signUpDate | format_datetime('full', 'none', locale= 'fr')}}</p>
                 </li>
             </ul>
         </div>

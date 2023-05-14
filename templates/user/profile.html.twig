@@ -9,7 +9,8 @@
 
 {% block body %}
     <div class="block">
-        <h2 class="pb-30">Page de profil</h2>
+        <h2 class="pb-30">Votre profil</h2>
+        <p class="">membre depuis le {{ app.user.signUpDate | format_datetime('full', 'none', locale= 'fr') }}</p>
     </div>
     <div class="block mt-20 text-center">
         <h2>Vos statistiques</h2>

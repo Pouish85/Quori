@@ -52,7 +52,7 @@
                     <div class="d-flex flex-row-nowrap align-items-center pb-10">
                         <a href="{{ path('user_profile', {id: comment.author.id}) }}" class="d-flex flex-row-nowrap align-items-center">
                             <img src="{{comment.author.image}}" alt="avatar" class="avatar-small mr-10">
-                            <p class="clickable">{{comment.author.fullname}}</p>
+                            <p class="clickable">{{comment.author.username}}</p>
                         </a>
                         <span class="ml-auto"> {{ comment.createdAt | ago(locale= 'fr') }} </span>
                     </div>

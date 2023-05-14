@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,11 +31,12 @@ class SecurityController extends AbstractController
         if ($signupForm->isSubmitted() && $signupForm->isValid()) {
             $hashedPassword = $userPasswordHasherInterface->hashPassword($user, $user->getPassword());
             $user->setPassword($hashedPassword);
+            $user->setSignUpDate(new \DateTimeImmutable(timezone: new DateTimeZone("Europe/Paris")));
 
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('succes', 'Bienvenue sur Quori');
+            $this->addFlash('success', 'Bienvenue sur Quori');
             return $userAuthenticator->authenticateUser($user, $this->formLoginAuthenticator, $request);
         }
 

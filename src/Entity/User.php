@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -13,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: "email", message: "Cet email est déjà enregistré.")]
+#[UniqueEntity(fields: "username", message: "Ce nom d'utilisateur est déjà utilisé.")]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -58,6 +60,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Vote::class)]
     private Collection $votes;
+
+    #[ORM\Column(length: 50, unique: true)]
+    #[Assert\NotBlank(message: 'Ce champ ne peut être vide')]
+    private ?string $username = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $signUpDate = null;
 
     public function __construct()
     {
@@ -375,6 +384,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $vote->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function getSignUpDate(): ?\DateTimeInterface
+    {
+        return $this->signUpDate;
+    }
+
+    public function setSignUpDate(\DateTimeInterface $signUpDate): self
+    {
+        $this->signUpDate = $signUpDate;
 
         return $this;
     }
