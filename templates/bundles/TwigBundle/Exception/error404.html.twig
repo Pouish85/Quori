@@ -1,0 +1,19 @@
+{# templates/bundles/TwigBundle/Exception/error404.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{asset('css/errors.css')}}">
+{% endblock stylesheets %}
+
+{% block body %}
+    <div class="errorBody d-flex flex-column align-items-center">
+        <h1 class="errorBigText">OUPS! Une erreur est survenue</h1>
+    <img src="{{asset('images/404.gif')}}" alt="erreur404" class="errorGif">
+
+    <p class="errorSmallText">
+        La page que vous demandez n'existe pas
+    </p>
+        <a href="{{ path('home') }}" class="btn btn-primary">Retouner a l'accueil</a>.
+    </div>
+{% endblock %}
