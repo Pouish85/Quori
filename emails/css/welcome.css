@@ -1,0 +1,33 @@
+html {
+    font-family: "Open Sans", sans-serif;
+    color: #636466;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    min-width: 850px;
+    min-height: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #d4d4d4;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.highlight {
+    color: #151e3f;
+}
+
+a {
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    margin-top: 20px;
+    background-color: #415bb6;
+    border-radius: 3px;
+}

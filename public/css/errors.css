@@ -1,0 +1,21 @@
+.errorBody {
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.errorBigText {
+    margin-top: 20px;
+    color: #151e3f;
+}
+
+.errorGif {
+    height: 450px;
+    object-fit: contain;
+}
+
+.errorSmallText {
+    color: #415bb6;
+    margin-bottom: 20px;
+}

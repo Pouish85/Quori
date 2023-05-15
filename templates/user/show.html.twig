@@ -14,7 +14,7 @@
             <img src="{{user.image}}" alt="User Avatar" class="mr-10 avatar-small">
             <ul>
                 <li class="mb-10 align-items-center">
-                    <p class="">membre depuis {{ user.signUpDate | format_datetime('full', 'none', locale= 'fr')}}</p>
+                    <p class="">membre depuis le {{ user.signUpDate | format_datetime('full', 'none', locale= 'fr')}}</p>
                 </li>
             </ul>
         </div>

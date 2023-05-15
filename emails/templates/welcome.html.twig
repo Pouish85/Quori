@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenue sur Quori</title>
+</head>
+<body>
+    {% apply inline_css(source('@email_css/welcome.css')) %}
+        <div class="container">
+            <h1>Bienvenue <span class="highlight">{{ username }}</span></h1>
+            <p>
+                Nous sommes heureux de vous voir rejoindre la communauté de
+                Quori!
+            </p>
+
+            <p>Vous pouvez dés à présent poser des questions sur Quori</p>
+            <a href="{{ path('signin') }}">Se connecter</a>
+        </div>
+    {% endapply %}
+</body>
+</html>

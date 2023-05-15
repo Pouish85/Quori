@@ -6,9 +6,11 @@ use App\Entity\User;
 use App\Form\UserType;
 use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -22,7 +24,7 @@ class SecurityController extends AbstractController
 
 
     #[Route('/signup', name: 'signup')]
-    public function signup(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface, EntityManagerInterface $em, UserAuthenticatorInterface $userAuthenticator): Response
+    public function signup(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface, EntityManagerInterface $em, UserAuthenticatorInterface $userAuthenticator, MailerInterface $mailer): Response
     {
         $user = new User();
         $signupForm = $this->createForm(UserType::class, $user);
@@ -35,6 +37,15 @@ class SecurityController extends AbstractController
 
             $em->persist($user);
             $em->flush();
+
+            $email = new TemplatedEmail();
+            $email->to($user->getEmail())
+                ->subject('Bienvenue sur Quori')
+                ->htmlTemplate('@email_templates/welcome.html.twig')
+                ->context([
+                    'username' => $user->getUsername()
+                ]);
+            $mailer->send($email);
 
             $this->addFlash('success', 'Bienvenue sur Quori');
             return $userAuthenticator->authenticateUser($user, $this->formLoginAuthenticator, $request);
