@@ -29,6 +29,9 @@
     "knplabs/knp-time-bundle": {
         "version": "v1.20.0"
     },
+    "php-flasher/flasher-symfony": {
+        "version": "v1.13.1"
+    },
     "symfony/console": {
         "version": "6.2",
         "recipe": {

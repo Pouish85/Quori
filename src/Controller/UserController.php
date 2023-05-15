@@ -36,7 +36,7 @@ class UserController extends AbstractController
                 $currentUser->setPassword($hashedNewPassword);
             }
             $em->flush();
-            $this->addFlash('success', 'Modification des informations sauvegardées !');
+            flash()->addSuccess("Modification des informations sauvegardées!");
         }
 
         return $this->render('user/profile_settings.html.twig', [

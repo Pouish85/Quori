@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\ResetPasswordRepository;
 use App\Repository\UserRepository;
+use DateTime;
 use DateTimeImmutable;
 use DateTimeZone;
 use Doctrine\ORM\EntityManager;
@@ -14,6 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -22,6 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class SecurityController extends AbstractController
@@ -55,7 +58,7 @@ class SecurityController extends AbstractController
                 ]);
             $mailer->send($email);
 
-            $this->addFlash('success', 'Bienvenue sur Quori');
+            flash()->addSuccess("Bienvenue sur Quori");
             return $userAuthenticator->authenticateUser($user, $this->formLoginAuthenticator, $request);
         }
 
@@ -135,7 +138,7 @@ class SecurityController extends AbstractController
             }
 
 
-            $this->addFlash('success', "Si l'adresse email entrée est enregistrée, un email vous a été envoyé");
+            flash()->addSuccess("Si l'adresse email entrée est enregistrée, un email vous a été envoyé");
             return $this->redirectToRoute('signin');
         }
 
@@ -143,7 +146,36 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/reset-password/{token}', name: 'reset-password')]
-    public function resetPassword()
+    public function resetPassword(Request $request, ResetPasswordRepository $resetPasswordRepository)
     {
+        // $token = $this->token;
+        // if($token->expiredAt() > DateTime('now')) {
+
+
+
+        //     $newPasswordFom = $this->createFormBuilder()
+        //         ->add('newPassword', PasswordType::class), [
+        //             'constraints' => [
+        //                 new NotBlank([
+        //                     'message' => "Veuillez renseigner ce champ."
+        //                 ]),
+        //                 new Length([
+        //                     'message' => 'Veuillez entre un mot de passe de 6 caractères minimum.'
+        //                 ])
+        //             ]
+        //         ]
+        //         ->getForm();
+
+        //     $newPassordForm->handleRequest($request);
+
+        //     if($newPasswordFom->isSubmitted() && $newPasswordFom->isValid() ) {
+        //         $user = $resetPasswordRepository->findOneBy('token' => $token);
+
+        //     }
+
+
+        // } else {
+        //     $this->addFlash('error', 'Votre demande a expirée');
+        // }
     }
 }
