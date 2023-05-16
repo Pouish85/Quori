@@ -9,3 +9,4 @@
 /vendor/
 ###< symfony/framework-bundle ###
 public/profiles
+public/questionsPictures

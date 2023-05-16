@@ -9,6 +9,7 @@ use App\Form\CommentType;
 use App\Form\QuestionType;
 use App\Repository\QuestionRepository;
 use App\Repository\VoteRepository;
+use App\Services\UploadImageService;
 use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,7 +22,7 @@ class QuestionController extends AbstractController
 {
     #[Route('/question/ask', name: 'ask_question')]
     #[isGranted('IS_AUTHENTICATED_REMEMBERED')]
-    public function ask(Request $request, entityManagerInterface $em): Response
+    public function ask(Request $request, entityManagerInterface $em, UploadImageService $pictureUploader): Response
     {
         $user = $this->getUser();
         $question = new Question();
@@ -33,6 +34,11 @@ class QuestionController extends AbstractController
             $question->setRating(0);
             $question->setAuthor($user);
             $question->setCreatedAt(new \DateTimeImmutable(timezone: new DateTimeZone("Europe/Paris")));
+
+            $picture = $formQuestion->get('pictureFile')->getData();
+            if ($picture) {
+                $question->setPicture($pictureUploader->uploadQuestionPicture($picture, $user));
+            }
 
             $em->persist($question);
             $em->flush();

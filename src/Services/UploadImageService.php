@@ -11,7 +11,9 @@ class UploadImageService
     public function __construct(
         private Filesystem $fs,
         private string $profileFolder,
-        private string $profileFolderPublic
+        private string $profileFolderPublic,
+        private string $questionsPicturesFolder,
+        private string $questionsPicturesFolderPublic
     ) {
     }
 
@@ -26,5 +28,14 @@ class UploadImageService
         }
 
         return $this->profileFolderPublic . '/' . $filename;
+    }
+
+    public function uploadQuestionPicture($picture = null, $authorId)
+    {
+        $ext = $picture->guessExtension() ?? 'bin';
+        $filename = $authorId . "_" . bin2hex(random_bytes(10)) . "." . $ext;
+        $picture->move($this->questionsPicturesFolder, $filename);
+
+        return $this->questionsPicturesFolderPublic . '/' . $filename;
     }
 }

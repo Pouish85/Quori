@@ -20,10 +20,15 @@
                         <div class="question-tag">QUESTION</div>
                     </div>
                     <a href="{{ path('user_profile', {id: question.author.id}) }}">
-                        <img src="{{ question.author.image }}" alt="avatar" class="avatar ml-10">
+                        <img src="{{ asset(question.author.image) }}" alt="avatar" class="avatar ml-10">
                     </a>
                 </div>
                 <p class="question-text"> {{ question.content }}</p>
+                {% if question.picture %}
+                    <div class="questionPicture d-flex justify-content-center mt-10">
+                    <img src="{{ asset(question.picture) }}" alt="questionPicture">
+                </div>
+                {% endif %}
             </div>
         </div>
         <div class="separator"></div>
