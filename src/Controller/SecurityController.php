@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\HttpFoundation\Request;
@@ -146,36 +147,52 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/reset-password/{token}', name: 'reset-password')]
-    public function resetPassword(Request $request, ResetPasswordRepository $resetPasswordRepository)
+    public function resetPassword(string $token, Request $request, ResetPasswordRepository $resetPasswordRepository, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher)
     {
-        // $token = $this->token;
-        // if($token->expiredAt() > DateTime('now')) {
+        $resetPassword = $resetPasswordRepository->findOneBy(['token' => $token]);
+
+        if (!$resetPassword || $resetPassword->getExpiredAt() < new DateTime('now')) {
+
+            if ($resetPassword) {
+                $em->remove($resetPassword);
+                $em->flush();
+            }
+
+            flash()->addError("Votre demande a expirée, veuillez recommencer");
+            return $this->redirectToRoute('reset-password-request');
+        }
+        $resetPasswordForm = $this->createFormBuilder()
+            ->add('password', PasswordType::class, [
+                'label' => 'Nouveau mot de passe',
+                'constraints' => [
+                    new Length([
+                        'min' => 6,
+                        'minMessage' => "Le mot de passe doit faire un minimum de 6 caractères"
+                    ]),
+                    new NotBlank([
+                        'message' => 'Veuillez saisir ce champ'
+                    ])
+                ]
+            ])
+            ->getForm();
+
+        $resetPasswordForm->handleRequest($request);
+
+        if ($resetPasswordForm->isSubmitted() && $resetPasswordForm->isValid()) {
+            $user = $resetPassword->getUser();
+            $newPassword = $resetPasswordForm->get('password')->getData();
+            $hashedNewPassword = $passwordHasher->hashPassword($user, $newPassword);
+            $user->setPassword($hashedNewPassword);
+
+            $em->remove($resetPassword);
+            $em->flush();
+
+            flash()->addSuccess('Votre mot de passe a été mis a jour');
+            $this->redirectToRoute('signin');
+        }
 
 
 
-        //     $newPasswordFom = $this->createFormBuilder()
-        //         ->add('newPassword', PasswordType::class), [
-        //             'constraints' => [
-        //                 new NotBlank([
-        //                     'message' => "Veuillez renseigner ce champ."
-        //                 ]),
-        //                 new Length([
-        //                     'message' => 'Veuillez entre un mot de passe de 6 caractères minimum.'
-        //                 ])
-        //             ]
-        //         ]
-        //         ->getForm();
-
-        //     $newPassordForm->handleRequest($request);
-
-        //     if($newPasswordFom->isSubmitted() && $newPasswordFom->isValid() ) {
-        //         $user = $resetPasswordRepository->findOneBy('token' => $token);
-
-        //     }
-
-
-        // } else {
-        //     $this->addFlash('error', 'Votre demande a expirée');
-        // }
+        return $this->render('security/reset-password-form.html.twig', ['form' => $resetPasswordForm->createView()]);
     }
 }
