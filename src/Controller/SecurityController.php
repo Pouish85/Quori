@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\ResetPasswordRepository;
 use App\Repository\UserRepository;
+use App\Services\UploadImageService;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeZone;
@@ -36,7 +37,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/signup', name: 'signup')]
-    public function signup(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface, EntityManagerInterface $em, UserAuthenticatorInterface $userAuthenticator, MailerInterface $mailer): Response
+    public function signup(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface, EntityManagerInterface $em, UserAuthenticatorInterface $userAuthenticator, MailerInterface $mailer, UploadImageService $uploaderPicture): Response
     {
         $user = new User();
         $signupForm = $this->createForm(UserType::class, $user);
@@ -46,14 +47,10 @@ class SecurityController extends AbstractController
             $hashedPassword = $userPasswordHasherInterface->hashPassword($user, $user->getPassword());
             $user->setPassword($hashedPassword);
             $user->setSignUpDate(new \DateTimeImmutable(timezone: new DateTimeZone("Europe/Paris")));
-            $picture = $signupForm->get('pictureFile')->getData();
 
+            $picture = $signupForm->get('pictureFile')->getData();
             if ($picture) {
-                $folder = $this->getParameter('profile.folder');
-                $ext = $picture->guessExtension() ?? 'bin';
-                $filename = bin2hex(random_bytes(10)) . "." . $ext;
-                $picture->move($folder, $filename);
-                $user->setImage($this->getParameter('profile.folder.public_path') . "/" . $filename);
+                $user->setImage($uploaderPicture->uploadProfileImage($picture));
             } else {
                 $user->setImage("/images/default_profile.png");
             }
