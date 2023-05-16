@@ -128,7 +128,7 @@ class SecurityController extends AbstractController
 
                 $resetPassword = new ResetPassword();
                 $resetPassword->setUser($user)
-                    ->setToken($token)
+                    ->setToken(sha1($token))
                     ->setExpiredAt(new DateTimeImmutable('+2 hours'));
 
                 $em->persist($resetPassword);
@@ -163,7 +163,7 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('signin');
         }
 
-        $resetPassword = $resetPasswordRepository->findOneBy(['token' => $token]);
+        $resetPassword = $resetPasswordRepository->findOneBy(['token' => sha1($token)]);
 
         if (!$resetPassword || $resetPassword->getExpiredAt() < new DateTime('now')) {
 
