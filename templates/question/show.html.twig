@@ -20,7 +20,7 @@
                         <div class="question-tag">QUESTION</div>
                     </div>
                     <a href="{{ path('user_profile', {id: question.author.id}) }}">
-                        <img src="{{ asset(question.author.image) }}" alt="avatar" class="avatar ml-10">
+                        <img src="{{ asset(question.author.image) }}" alt="avatar" class="avatar ml-10 blank">
                     </a>
                 </div>
                 <p class="question-text"> {{ question.content }}</p>
