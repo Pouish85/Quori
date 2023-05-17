@@ -30,10 +30,11 @@ class UploadImageService
         return $this->profileFolderPublic . '/' . $filename;
     }
 
-    public function uploadQuestionPicture($picture = null, $authorId)
+    public function uploadQuestionPicture($picture = null, $userId)
     {
+
         $ext = $picture->guessExtension() ?? 'bin';
-        $filename = $authorId . "_" . bin2hex(random_bytes(10)) . "." . $ext;
+        $filename = $userId . "_" . bin2hex(random_bytes(10)) . "." . $ext;
         $picture->move($this->questionsPicturesFolder, $filename);
 
         return $this->questionsPicturesFolderPublic . '/' . $filename;

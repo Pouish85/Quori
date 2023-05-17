@@ -18,6 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -184,17 +185,12 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('reset-password-request');
         }
         $resetPasswordForm = $this->createFormBuilder()
-            ->add('password', PasswordType::class, [
-                'label' => 'Nouveau mot de passe',
-                'constraints' => [
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => "Le mot de passe doit faire un minimum de 6 caractères"
-                    ]),
-                    new NotBlank([
-                        'message' => 'Veuillez saisir ce champ'
-                    ])
-                ]
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => "Les mots de passe ne correspondent pas",
+                'required' => false,
+                'first_options' => ['label' => "Nouveau mot de passe"],
+                'second_options' => ['label' => "Vérification du mot de passe"]
             ])
             ->getForm();
 

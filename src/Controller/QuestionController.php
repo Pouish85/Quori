@@ -35,9 +35,10 @@ class QuestionController extends AbstractController
             $question->setAuthor($user);
             $question->setCreatedAt(new \DateTimeImmutable(timezone: new DateTimeZone("Europe/Paris")));
 
+            $userId = $user->getId();
             $picture = $formQuestion->get('pictureFile')->getData();
             if ($picture) {
-                $question->setPicture($pictureUploader->uploadQuestionPicture($picture, $user));
+                $question->setPicture($pictureUploader->uploadQuestionPicture($picture, $userId));
             }
 
             $em->persist($question);
