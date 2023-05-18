@@ -1,0 +1,15 @@
+/* RATING */
+.fa-plus,
+.fa-minus {
+    margin: 8px 0px;
+}
+
+.rating {
+    &-up {
+        color: var(--success);
+    }
+
+    &-down {
+        color: var(--warning);
+    }
+}
