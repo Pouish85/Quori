@@ -3,13 +3,13 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{asset('css/errors.css')}}">
+    {{ encore_entry_link_tags('errors') }}
 {% endblock stylesheets %}
 
 {% block body %}
     <div class="errorBody d-flex flex-column align-items-center">
         <h1 class="errorBigText">OUPS! Une erreur est survenue</h1>
-    <img src="{{asset('images/error.gif')}}" alt="erreur404" class="errorGif">
+    <img src="{{asset('build/images/error.gif')}}" alt="erreur404" class="errorGif">
 
     <p class="errorSmallText">
         La page que vous demandez n'existe pas
