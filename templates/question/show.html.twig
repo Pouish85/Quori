@@ -15,8 +15,8 @@
             {% include "./partials/_rating.html.twig" with {rating: question.rating, from: 'question', id: question.id} %}
             <div class="w-full">
                 <p>le <span>{{ question.createdAt | format_datetime('short', locale= 'fr') }}</span></p>
-                <div class="d-flex flex-row-nowrap justify-content-between pb-30 w-full">
-                    <div class="d-flex flex-row-nowrap align-items-center" >
+                <div class="d-flex flex-row-nowrap justify-content-between pb-30 w-full align-items-center">
+                    <div class="d-flex flex-row-nowrap-xs align-items-center flex-column-xs-r" >
                         <h3>{{ question.title }}</h3>
                         <div class="question-tag">QUESTION</div>
                     </div>

@@ -19,7 +19,7 @@
                         <h4 class="tagQ">Q</h4>
                         <li class="question-title">{{ question.title }}</li>
                     </div>
-                    <div>
+                    <div class="flex-row-xs">
                         <p class="fa-solid fa-chart-line mr-10"><span class="ml-10 {% if question.rating > 0 %} rating-up {% elseif question.rating < 0 %} rating-down {% endif %}" >{{question.rating }}</span></p>
                         <p class="fa-solid fa-comment mr-10"><span class="ml-10">{{ question.nbResponse }}</span></p>
                     </div>

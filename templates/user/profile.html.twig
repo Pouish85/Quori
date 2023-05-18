@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User Profile{% endblock %}
+{% block title %}Votre Profil{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -8,15 +8,15 @@
 {% endblock %}
 
 {% block body %}
-    <div class="block">
+    <div class="block mb-20">
         <h2 class="pb-30">Votre profil</h2>
         <p class="">membre depuis le {{ app.user.signUpDate | format_datetime('full', 'none', locale= 'fr') }}</p>
     </div>
     <div class="block mt-20 text-center">
         <h2>Vos statistiques</h2>
     </div>
-    <div class="d-flex flex-row-nowrap mt-20">
-        <div class="block flex-fill mr-10" title="Vos questions">
+    <div class="d-flex flex-row-nowrap flex-column-xs mt-20">
+        <div class="block flex-fill panel-l" title="Vos questions">
             <a href="{{path('show_questions')}}" class="sectionTitle">Questions:</a>
             <div class="d-flex flex-row-nowrap justify-content-between mt-10">
                 <h4>Nombre de questions:</h4>
@@ -30,8 +30,6 @@
                 <h4  class="mb-10" >Question la mieux notée:</h4>
                 {% if app.user.getQuestionWithHighestRating() is not null %}
                 <a href="{{path('show_question', {id: app.user.getQuestionWithHighestRating().id})}}" class="d-flex flex-row-nowrap align-items-center">
-                    {# <h4 class="tagQ">Q</h4> #}
-                    {# <p class="question-title">La question la plus populaire</p> #}
                         <h4 class="tagQ">Q</h4>
                         <p class="question-title">{{ app.user.getQuestionWithHighestRating().title | slice(0,20) }}  {% if app.user.getQuestionWithHighestRating().title | length >= 21 %} 
                             <span title="Voir la suite">...</span> 
@@ -40,7 +38,7 @@
                 {% endif %}
             </div>
         </div>
-        <div class="block flex-fill ml-10" title="Vos reponses">
+        <div class="block flex-fill panel-r" title="Vos reponses">
             <a href="{{path('show_comments')}}" class="sectionTitle">Réponses:</a>
             <div class="d-flex flex-row-nowrap justify-content-between mt-10">
                 <h4>Nombre de réponses:</h4>

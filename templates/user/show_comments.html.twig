@@ -24,7 +24,9 @@
                         <span title="Voir la suite">...</span> 
                         {% endif %}</p>
                     </div>
-                    <p class="fa-solid fa-chart-line mr-10"><span class="ml-10 {% if comment.rating > 0 %} rating-up {% elseif comment.rating < 0 %} rating-down {% endif %}" >{{comment.rating}}</span></p>
+                    <div class="d-flex align-items-center"">
+                        <p class="fa-solid fa-chart-line mr-10"><span class="ml-10 {% if comment.rating > 0 %} rating-up {% elseif comment.rating < 0 %} rating-down {% endif %}" >{{comment.rating}}</span></p>
+                    </div>
                 </a>
             {% endfor %}
         </ul>

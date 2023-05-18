@@ -3,6 +3,12 @@
 .sidebar {
     min-width: 200px;
 
+    @include xs {
+        width: 100%;
+        justify-content: center;
+        padding: 20px 0;
+    }
+
     &-nav a {
         display: block;
         padding: 10px;

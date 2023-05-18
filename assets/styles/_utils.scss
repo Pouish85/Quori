@@ -13,6 +13,17 @@
 
 .flex-column {
     flex-direction: column;
+
+    &-xs {
+        @include xs {
+            flex-direction: column;
+        }
+        &-r {
+            @include xs {
+                flex-direction: column-reverse;
+            }
+        }
+    }
 }
 
 .text-center {
@@ -137,4 +148,34 @@
 
 .w-full {
     width: 100%;
+}
+
+/* HEIGHT */
+
+.h-full {
+    height: 100%;
+}
+
+.test {
+    vertical-align: baseline;
+}
+
+/* RESPONSIVE */
+
+.xs-hide {
+    @include xs {
+        display: none;
+    }
+}
+
+.show-xs {
+    display: none;
+
+    @include xs {
+        display: inherit;
+    }
+}
+
+.hidden {
+    display: none;
 }

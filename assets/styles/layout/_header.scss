@@ -2,27 +2,67 @@
 
 header {
     box-shadow: var(--box-shadow);
-}
 
-.header {
-    &-logo {
-        max-width: 150px;
-
-        & img {
+    .header {
+        &-logo {
             max-width: 150px;
-            border-radius: 8px;
+
+            & img {
+                max-width: 150px;
+                border-radius: 8px;
+
+                @include xs {
+                    width: 100px;
+                }
+            }
+        }
+
+        &-search {
+            border-radius: var(--border-radius);
+            background-color: var(--gray-light);
+            max-width: 400px;
+
+            @include xs {
+                display: none;
+            }
+
+            & input {
+                border: none;
+                outline: none;
+                background-color: var(--gray-light);
+            }
         }
     }
+    .burger {
+        font-size: 24px;
+        margin-right: 10px;
+        z-index: 5;
+    }
+}
 
-    &-search {
-        border-radius: var(--border-radius);
-        background-color: var(--gray-light);
-        max-width: 400px;
+.menu-xs {
+    border-bottom: var(--border);
+    box-shadow: var(--box-shadow);
+    background-color: var(--secondary);
+    opacity: 0.95;
+    border-radius: 10px;
+    margin: 10px 10px 0;
+    position: absolute;
+    top: 30px;
+    right: 0;
 
-        & input {
-            border: none;
-            outline: none;
-            background-color: var(--gray-light);
+    .onMenu {
+        display: flex;
+        flex-direction: row-reverse;
+        height: 40px;
+    }
+
+    .menu-content {
+        opacity: 1;
+        color: black;
+
+        a {
+            margin: 10px 15px;
         }
     }
 }

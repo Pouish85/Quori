@@ -1,3 +1,5 @@
+@import "./mixins";
+
 .question-title {
     color: var(--primary);
     font-weight: var(--font-weight-bold);
@@ -34,4 +36,24 @@
     font-size: var(--font-size-large);
     font-weight: var(--font-weight-bold);
     text-decoration: underline;
+}
+
+.panel {
+    &-l {
+        margin-right: 10px;
+
+        @include xs {
+            margin-right: 0;
+            margin-bottom: 10px;
+        }
+    }
+
+    &-r {
+        margin-left: 10px;
+
+        @include xs {
+            margin-left: 0;
+            margin-top: 10px;
+        }
+    }
 }

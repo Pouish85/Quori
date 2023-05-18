@@ -1,3 +1,5 @@
+@import "./mixins";
+
 .question-tag {
     background-color: var(--primary);
     color: white;
@@ -6,6 +8,10 @@
     border-radius: var(--border-radius);
     padding: 5px 10px;
     margin-left: 10px;
+
+    @include xs {
+        margin: 10px 0;
+    }
 }
 
 .question-text,
