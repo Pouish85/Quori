@@ -70,10 +70,11 @@ Encore
     .enableSassLoader()
 
     // uncomment if you use TypeScript
-    .enableTypeScriptLoader();
+    .enableTypeScriptLoader()
 
-// uncomment if you use React
-//.enableReactPreset()
+    // uncomment if you use React
+    //.enableReactPreset()
+    .enableVueLoader();
 
 // uncomment to get integrity="..." attributes on your script & link tags
 // requires WebpackEncoreBundle 1.4 or higher
