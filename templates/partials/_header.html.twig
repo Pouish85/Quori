@@ -14,9 +14,6 @@
                 <a href="{{ path('current_user_profile') }}">
                     <img src="{{ asset(app.user.image) }}" alt="User Profile" class="avatar mr-10">
                 </a>
-                <small>
-                    <a href="{{ path('logout') }}" class="clickable">Déconnexion</a>
-                </small>
             </div>
         {% else %}
             <div class="xs-hide">
@@ -35,7 +32,6 @@
     <div class="menu-content">
          {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         {% include "partials/_sidebar.html.twig" %}
-        <a href="{{ path("logout") }}" class="clickable">Déconnexion</a>
     {% else %}
         <a href="{{ path("signup") }}" class="btn btn-primary mr-5">Inscription</a>
         <a href="{{ path("signin") }}" class="btn btn-primary-reverse">Connexion</a>

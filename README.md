@@ -1,5 +1,5 @@
 <div align="center" id="top"> 
-  <img src="./.github/app.gif" alt="Quori" />
+  <img src="assets/images/logo.png" alt="Quori" />
 
 &#xa0;
 
@@ -50,22 +50,23 @@ Clone du site officiel Quora
 
 ## :sparkles: Features
 
-:heavy_check_mark: Persistance des données mySQL;\
-:heavy_check_mark: Créer une question;\
-:heavy_check_mark: Repondre a unequestion;\
-:heavy_check_mark: Voter la pertinance de la question;\
-:heavy_check_mark: Voter la pertinance des reponses;\
-:heavy_check_mark: Recherche de question;\
-:heavy_check_mark: Création d'un compte utilisateur;\
-:heavy_check_mark: Modification du profil et de l'avatar de l'utilisateur;\
-:heavy_check_mark: Reset password avec un systeme de token
+:heavy_check_mark: Persistance des données mySQL\
+:heavy_check_mark: Créer une question\
+:heavy_check_mark: Repondre a une question\
+:heavy_check_mark: Voter la pertinance de la question\
+:heavy_check_mark: Voter la pertinance des reponses\
+:heavy_check_mark: Création d'un compte utilisateur\
+:heavy_check_mark: Modification du profil et de l'avatar de l'utilisateur\
+:heavy_check_mark: Reset password avec un systeme de token\
+:heavy_check_mark: Ajout d'images dans les questions\
+:heavy_check_mark: Recherche de question\
 
 ## :rocket: Technologies
 
 The following tools were used in this project:
 
 -   [Symfony](https://symfony.com)
--   [JavaScript](https://developer.mozilla.org/fr/docs/Web/JavaScript)
+-   [Typescript](https://www.typescriptlang.org)
 -   [MySQL](https://www.mysql.com/)
 -   [Sass](https://sass-lang.com)
 -   [Webpack Encore](https://www.npmjs.com/package/@symfony/webpack-encore)
