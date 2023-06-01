@@ -6,6 +6,7 @@
 /public/bundles/
 /var/
 /vendor/
+.env
 
 ###< symfony/framework-bundle ###
 # Dossiers des images de profil et de questions
