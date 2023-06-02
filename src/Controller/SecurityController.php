@@ -168,7 +168,7 @@ class SecurityController extends AbstractController
 
         $limiter = $passwordRecoveryLimiter->create($request->getClientIp());
         if (!$limiter->consume(1)->isAccepted()) {
-            flash()->addError('Vous devez attendre 2 heures avant de faire une nouvelle demande');
+            flash()->addSuccess('Votre mot de passe a été modifié');
             return $this->redirectToRoute('signin');
         }
 

@@ -8,6 +8,7 @@ use App\Services\UploadImageService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -26,7 +27,13 @@ class UserController extends AbstractController
         $currentUser = $this->getUser();
         $profileForm = $this->createForm(UserType::class, $currentUser);
         $profileForm->remove('password');
-        $profileForm->add('newPassword', PasswordType::class, ['label' => 'Nouveau mot de passe', 'required' => false]);
+        $profileForm->add('newPassword', RepeatedType::class, [
+            'type' => PasswordType::class,
+            'invalid_message' => "Les mots de passe ne correspondent pas",
+            'required' => false,
+            'first_options' => ['label' => "Nouveau mot de passe"],
+            'second_options' => ['label' => "Vérification du mot de passe"]
+        ]);
 
         $profileForm->handleRequest($request);
 
