@@ -42,8 +42,8 @@ class UserType extends AbstractType
                 'type' => PasswordType::class,
                 'invalid_message' => "Les mots de passe ne correspondent pas",
                 'required' => false,
-                'first_options' => ['label' => "Mot de passe"],
-                'second_options' => ['label' => "Vérification du mot de passe"]
+                'first_options' => ['label' => "Mot de passe *"],
+                'second_options' => ['label' => "Vérification du mot de passe *"]
             ]);
     }
 

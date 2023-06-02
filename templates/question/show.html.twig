@@ -14,7 +14,7 @@
         <div class="d-flex flex-row-nowrap mr-10">
             {% include "./partials/_rating.html.twig" with {rating: question.rating, from: 'question', id: question.id} %}
             <div class="w-full">
-                <p>le <span>{{ question.createdAt | format_datetime('short', locale= 'fr') }}</span></p>
+                <p class="date">le <span>{{ question.createdAt | format_datetime('short', locale= 'fr') }}</span></p>
                 <div class="d-flex flex-row-nowrap justify-content-between pb-30 w-full align-items-center">
                     <div class="d-flex flex-row-nowrap-xs align-items-center flex-column-xs-r" >
                         <h3>{{ question.title }}</h3>
@@ -60,7 +60,7 @@
                             <img src="{{ asset(comment.author.image) }}" alt="avatar" class="avatar-small mr-10">
                             <p class="clickable">{{comment.author.username}}</p>
                         </a>
-                        <span class="ml-auto"> {{ comment.createdAt | ago(locale= 'fr') }} </span>
+                        <span class="ml-auto date"> le {{ comment.createdAt | format_datetime('short', locale= 'fr')}} </span>
                     </div>
                     <p class="question-response-text">{{ comment.content }}</p>
                 </div>

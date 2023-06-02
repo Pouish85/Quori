@@ -59,7 +59,7 @@ class QuestionRepository extends ServiceEntityRepository
             ->leftJoin('q.comments', 'c')
             ->addSelect('c')
             ->orderBy('c.createdAt', 'DESC')
-            ->join('c.author', 'ca')
+            ->leftjoin('c.author', 'ca')
             ->addSelect('ca')
             ->getQuery()
             ->getOneOrNullResult();
