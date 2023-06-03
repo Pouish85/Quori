@@ -168,7 +168,7 @@ class SecurityController extends AbstractController
 
         $limiter = $passwordRecoveryLimiter->create($request->getClientIp());
         if (!$limiter->consume(1)->isAccepted()) {
-            flash()->addSuccess('Votre mot de passe a été modifié');
+            flash()->addError('Vous devez attendre 2 heures avant de faire une nouvelle demande');
             return $this->redirectToRoute('signin');
         }
 
@@ -184,6 +184,8 @@ class SecurityController extends AbstractController
             flash()->addError("Votre demande a expirée, veuillez recommencer");
             return $this->redirectToRoute('reset-password-request');
         }
+        $user = $resetPassword->getUser();
+
         $resetPasswordForm = $this->createFormBuilder()
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -197,7 +199,7 @@ class SecurityController extends AbstractController
         $resetPasswordForm->handleRequest($request);
 
         if ($resetPasswordForm->isSubmitted() && $resetPasswordForm->isValid()) {
-            $user = $resetPassword->getUser();
+            // $user = $resetPassword->getUser();
             $newPassword = $resetPasswordForm->get('password')->getData();
             $hashedNewPassword = $passwordHasher->hashPassword($user, $newPassword);
             $user->setPassword($hashedNewPassword);
@@ -205,8 +207,8 @@ class SecurityController extends AbstractController
             $em->remove($resetPassword);
             $em->flush();
 
-            flash()->addSuccess('Votre mot de passe a été mis a jour');
-            $this->redirectToRoute('signin');
+            flash()->addSuccess('Votre mot de passe a été réinitialisé');
+            return $this->redirectToRoute('signin');
         }
 
 
